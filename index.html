@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Para FEL 💛</title>
+
+<style>
+body{
+    margin:0;
+    font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background: linear-gradient(to top, #0f2027, #203a43, #2c5364);
+    color:white;
+    overflow:hidden;
+}
+
+#game{
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+    padding:20px;
+    text-align:center;
+}
+
+h1{
+    font-size:2.2em;
+    margin-bottom:10px;
+}
+
+p{
+    font-size:1.2em;
+    max-width:90%;
+}
+
+button{
+    margin-top:20px;
+    padding:14px 24px;
+    border:none;
+    border-radius:15px;
+    background:#ffd166;
+    color:#333;
+    font-weight:bold;
+    font-size:1em;
+    cursor:pointer;
+}
+
+button:active{
+    transform:scale(0.95);
+}
+
+.fade{
+    animation:fade 0.8s ease;
+}
+
+@keyframes fade{
+    from{opacity:0; transform:translateY(20px);}
+    to{opacity:1; transform:translateY(0);}
+}
+
+.heart{
+    position:absolute;
+    color:#ff4d6d;
+    animation:floatUp 4s linear infinite;
+}
+
+@keyframes floatUp{
+    from{transform:translateY(100vh); opacity:1;}
+    to{transform:translateY(-10vh); opacity:0;}
+}
+</style>
+</head>
+
+<body>
+
+<div id="game">
+    <h1 id="title">💛 Hola FEL</h1>
+    <p id="text">Toca la pantalla para empezar...</p>
+    <button onclick="next()">Empezar</button>
+</div>
+
+<script>
+
+const scenes = [
+{
+title:"Nivel 1 🌟",
+text:"FEL... este no es cualquier juego. Es algo que hice solo para ti 💛"
+},
+{
+title:"Nivel 2 💫",
+text:"Quiero que sepas algo muy importante..."
+},
+{
+title:"Nivel 3 🤍",
+text:"Te quiero muchísimo, en serio, muchísimo."
+},
+{
+title:"Nivel 4 🙏",
+text:"Gracias por consolarme cuando lo necesito."
+},
+{
+title:"Nivel 5 💪",
+text:"Gracias por soportarme, por apoyarme, incluso cuando no estoy en mi mejor momento."
+},
+{
+title:"Nivel 6 🫶",
+text:"Siempre estás ahí… y eso vale más que todo."
+},
+{
+title:"Nivel FINAL ✨",
+text:"FEL, de verdad verdad… te quiero muchísimo. Siempre voy a estar para ti 💛"
+}
+];
+
+let current = -1;
+
+function next(){
+    current++;
+
+    if(current < scenes.length){
+        document.getElementById("title").innerText = scenes[current].title;
+        document.getElementById("text").innerText = scenes[current].text;
+
+        document.getElementById("title").classList.add("fade");
+        document.getElementById("text").classList.add("fade");
+
+        setTimeout(()=>{
+            document.getElementById("title").classList.remove("fade");
+            document.getElementById("text").classList.remove("fade");
+        },800);
+
+        if(current === scenes.length-1){
+            document.querySelector("button").innerText = "💛 Volver a empezar";
+        }
+
+    } else {
+        current = -1;
+        next();
+    }
+}
+
+// soporte táctil (iPhone)
+document.body.addEventListener("touchstart", () => {
+    next();
+});
+
+// corazones animados
+function createHearts(){
+    const heart = document.createElement("div");
+    heart.className = "heart";
+    heart.innerText = "💛";
+    heart.style.left = Math.random()*100 + "vw";
+    heart.style.fontSize = (Math.random()*20 + 10) + "px";
+    document.body.appendChild(heart);
+
+    setTimeout(()=>{ heart.remove(); },4000);
+}
+
+setInterval(createHearts, 300);
+
+</script>
+
+</body>
+</html>
